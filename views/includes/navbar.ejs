@@ -1,0 +1,226 @@
+<style>
+    .se-nav {
+        background: #fff;
+        border-bottom: 1px solid #ebebeb;
+        position: sticky;
+        top: 0;
+        z-index: 1030;
+        padding: 0.75rem 1.5rem 1rem;
+    }
+
+    .se-top {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+    }
+
+    .se-logo {
+        color: #fe424d;
+        font-weight: 800;
+        font-size: 1.6rem;
+        text-decoration: none;
+        letter-spacing: -0.5px;
+    }
+
+    .se-logo:hover {
+        color: #e23642;
+    }
+
+    .se-tabs {
+        display: flex;
+        gap: 1.75rem;
+    }
+
+    .se-tab {
+        text-decoration: none;
+        color: #6a6a6a;
+        font-weight: 500;
+        padding-bottom: 0.35rem;
+        border-bottom: 3px solid transparent;
+        transition: color 0.15s ease, border-color 0.15s ease;
+    }
+
+    .se-tab:hover {
+        color: #222;
+        border-bottom-color: #ddd;
+    }
+
+    .se-tab.active {
+        color: #222;
+        border-bottom-color: #222;
+    }
+
+    .se-right {
+        display: flex;
+        align-items: center;
+        gap: 0.75rem;
+    }
+
+    .se-host {
+        color: #222;
+        font-weight: 500;
+        text-decoration: none;
+        padding: 0.5rem 0.9rem;
+        border-radius: 2rem;
+    }
+
+    .se-host:hover {
+        background: #f2f2f2;
+        color: #222;
+    }
+
+    .se-circle {
+        width: 2.6rem;
+        height: 2.6rem;
+        border-radius: 50%;
+        border: none;
+        background: #f2f2f2;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 1.2rem;
+    }
+
+    .se-circle:hover {
+        background: #e6e6e6;
+    }
+
+    .se-search {
+        display: flex;
+        align-items: center;
+        max-width: 780px;
+        margin: 1rem auto 0;
+        border: 1px solid #ddd;
+        border-radius: 3rem;
+        box-shadow: 0 3px 12px rgba(0, 0, 0, 0.1);
+        padding: 0.4rem 0.4rem 0.4rem 0;
+    }
+
+    .se-field {
+        flex: 1;
+        padding: 0.4rem 1.5rem;
+        border-radius: 3rem;
+        display: flex;
+        flex-direction: column;
+        line-height: 1.2;
+    }
+
+    .se-field:hover {
+        background: #f2f2f2;
+    }
+
+    .se-field label {
+        font-size: 0.8rem;
+        font-weight: 700;
+        margin: 0;
+    }
+
+    .se-field input,
+    .se-field span {
+        border: none;
+        outline: none;
+        background: transparent;
+        font-size: 0.95rem;
+        color: #6a6a6a;
+        padding: 0;
+    }
+
+    .se-divider {
+        width: 1px;
+        height: 2rem;
+        background: #ddd;
+    }
+
+    .se-search-btn {
+        width: 3rem;
+        height: 3rem;
+        border: none;
+        border-radius: 50%;
+        background: #fe424d;
+        color: #fff;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        transition: background 0.15s ease;
+    }
+
+    .se-search-btn:hover {
+        background: #e23642;
+    }
+
+    @media (max-width: 767px) {
+
+        .se-tabs,
+        .se-host,
+        .se-when,
+        .se-who,
+        .se-divider {
+            display: none;
+        }
+
+        .se-nav {
+            padding: 0.75rem 1rem;
+        }
+    }
+</style>
+
+<nav class="se-nav">
+    <div class="se-top">
+        <a href="/listings" class="se-logo">&#127969; stayease</a>
+
+        <div class="se-tabs">
+            <a href="/listings" class="se-tab <%= !locals.category ? 'active' : '' %>">&#128293; Home</a>
+            <a href="/category/beachfront"
+                class="se-tab <%= locals.category === 'beachfront' ? 'active' : '' %>">&#127958;&#65039; Beachfront</a>
+            <a href="/category/mountains"
+                class="se-tab <%= locals.category === 'mountains' ? 'active' : '' %>">&#9968;&#65039; Mountains</a>
+            <a href="/category/villas" class="se-tab <%= locals.category === 'villas' ? 'active' : '' %>">&#127969;
+                Villas</a>
+            <a href="/category/heritage" class="se-tab <%= locals.category === 'heritage' ? 'active' : '' %>">&#127984;
+                Heritage</a>
+        </div>
+
+        <div class="se-right">
+            <a href="/listings/new" class="se-host">Become a host</a>
+
+            <div class="dropdown">
+                <button class="se-circle" data-bs-toggle="dropdown" aria-label="Menu">&#9776;</button>
+                <ul class="dropdown-menu dropdown-menu-end shadow border-0">
+                    <li><a class="dropdown-item" href="/listings">All listings</a></li>
+                    <li><a class="dropdown-item" href="/listings/new">Create listing</a></li>
+                    <li>
+                        <hr class="dropdown-divider" />
+                    </li>
+                    <li><a class="dropdown-item" href="#">Log in</a></li>
+                    <li><a class="dropdown-item" href="#">Sign up</a></li>
+                </ul>
+            </div>
+        </div>
+    </div>
+
+    <form class="se-search" method="GET" action="/listings">
+        <div class="se-field">
+            <label for="se-where">Where</label>
+            <input id="se-where" name="q" type="text" placeholder="Search destinations" autocomplete="off" />
+        </div>
+        <div class="se-divider"></div>
+        <div class="se-field se-when">
+            <label>When</label>
+            <span>Add dates</span>
+        </div>
+        <div class="se-divider"></div>
+        <div class="se-field se-who">
+            <label>Who</label>
+            <span>Add guests</span>
+        </div>
+        <button type="submit" class="se-search-btn" aria-label="Search">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"
+                stroke-linecap="round" stroke-linejoin="round">
+                <circle cx="10" cy="10" r="7"></circle>
+                <line x1="21" y1="21" x2="15.5" y2="15.5"></line>
+            </svg>
+        </button>
+    </form>
+</nav>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>

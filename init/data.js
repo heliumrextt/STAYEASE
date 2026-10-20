@@ -347,6 +347,54 @@ const sampleListings = [
     location: "Costa Rica",
     country: "Costa Rica",
   },
+  // Placeholder photo helper: replace with real image URLs later
 ];
 
-module.exports = { data: sampleListings };
+const categories = {
+  // Beachfront
+  "Cozy Beachfront Cottage": "beachfront",
+  "Beachfront Paradise": "beachfront",
+  "Private Island Retreat": "beachfront",
+  "Beachfront Bungalow in Bali": "beachfront",
+  "Beachfront Villa in Greece": "beachfront",
+  "Secluded Beach House in Costa Rica": "beachfront",
+
+  // Mountains
+  "Mountain Retreat": "mountains",
+  "Ski-In/Ski-Out Chalet": "mountains",
+  "Mountain View Cabin in Banff": "mountains",
+  "Lakefront Cabin in New Hampshire": "mountains",
+  "Ski Chalet in Aspen": "mountains",
+
+  // Heritage
+  "Historic Villa in Tuscany": "heritage",
+  "Historic Canal House": "heritage",
+  "Historic Brownstone in Boston": "heritage",
+  "Historic Castle in Scotland": "heritage",
+  "Historic Cottage in Charleston": "heritage",
+
+  // Villas
+  "Tropical Villa in Phuket": "villas",
+  "Desert Oasis in Dubai": "villas",
+  "Luxury Villa in the Maldives": "villas",
+
+  // Other categories (these appear under the first tab only)
+  "Modern Loft in Downtown": "cities",
+  "Luxury Penthouse with City Views": "cities",
+  "Art Deco Apartment in Miami": "cities",
+  "Modern Apartment in Tokyo": "cities",
+  "Secluded Treehouse Getaway": "cabins",
+  "Rustic Cabin by the Lake": "cabins",
+  "Rustic Log Cabin in Montana": "cabins",
+  "Eco-Friendly Treehouse Retreat": "cabins",
+  "Charming Cottage in the Cotswolds": "farms",
+  // "Safari Lodge in the Serengeti" is left out, so it becomes "trending"
+};
+
+const data = sampleListings.map((listing) => ({
+  ...listing,
+  category: categories[listing.title] || "trending",
+}));
+
+module.exports = { data };
+
