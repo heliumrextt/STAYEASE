@@ -1,3 +1,5 @@
+require("dotenv").config();
+
 const express = require("express");
 const app = express();
 const mongoose = require("mongoose");
@@ -5,7 +7,7 @@ const Listing = require("./models/listings.js");
 const path = require("path");
 const methodOverride = require("method-override");
 
-const MONGO_URL = "mongodb://127.0.0.1:27017/stayease";
+const MONGO_URL = process.env.MONGO_URI || "mongodb://127.0.0.1:27017/stayease";
 
 main()
   .then(() => {
@@ -25,7 +27,7 @@ app.use(express.urlencoded({ extended: true }));
 app.use(methodOverride("_method"));
 
 app.get("/", (req, res) => {
-  res.send("Hi, I am root");
+  res.redirect("/listings");
 });
 
 const categoryInfo = {
@@ -151,6 +153,7 @@ app.delete("/listings/:id", async (req, res) => {
 //   res.send("successful testing");
 // });
 
-app.listen(8080, () => {
-  console.log("server is listening to port 8080");
+const PORT = process.env.PORT || 8080;
+app.listen(PORT, () => {
+  console.log(`server is listening on port ${PORT}`);
 });
