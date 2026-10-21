@@ -29,6 +29,10 @@ const listingSchema = new Schema({
     enum: ["trending", "beachfront", "mountains", "villas", "pools", "cabins", "farms", "cities", "heritage", "budget"],
     default: "trending",
   },
+  owner: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: "User",
+  },
 });
 
 
