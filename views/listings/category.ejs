@@ -13,10 +13,13 @@
 
   <style>
     .cat-hero {
-
       color: #fff;
       text-align: center;
-      padding: 3.5rem 1rem;
+      padding: 5rem 1rem;
+      background-size: cover;
+      background-position: center;
+      background-repeat: no-repeat;
+      background-color: #333;
     }
 
     .cat-hero .emoji {
@@ -85,102 +88,108 @@
 
   <%- include('../includes/navbar') %>
 
-    <section class="cat-hero" style="background: <%- info.gradient %>;">
-      <div class="emoji">
-        <%= info.emoji %>
-      </div>
+    <% const t=info.title.toLowerCase(); let bg="" ; if (t.includes("beach")) bg="/images/beach.webp" ; else if
+      (t.includes("mountain")) bg="/images/mountain.webp" ; else if (t.includes("villa")) bg="/images/villa.webp" ; else
+      if (t.includes("heritage")) bg="/images/heritage.webp" ; %>
 
-      <h1>
-        <%= info.title %> Stays
-      </h1>
+      <section class="cat-hero" style="<%= bg ? `background-image: url('${bg}');` : `background: ${info.gradient};` %>">
 
-      <p>
-        <%= info.tagline %>
-      </p>
 
-      <span class="count-pill">
-        <%= listings.length %>
-          <%= listings.length===1 ? "place" : "places" %> to stay
-      </span>
-    </section>
-
-    <main class="container flex-grow-1 py-5">
-
-      <% if (listings.length===0) { %>
-
-        <div class="text-center py-5">
-          <h4>No <%= info.title.toLowerCase() %> stays yet</h4>
-
-          <p class="text-muted">
-            Be the first to add a stay in this category.
-          </p>
-
-          <a href="/listings/new" class="btn btn-danger mt-3">
-            Add the First Stay
-          </a>
+        <div class=" emoji">
+          <%= info.emoji %>
         </div>
 
-        <% } else { %>
+        <h1>
+          <%= info.title %> Stays
+        </h1>
 
-          <div class="row row-cols-1 row-cols-sm-2 row-cols-lg-4 g-4">
+        <p>
+          <%= info.tagline %>
+        </p>
 
-            <% for (const listing of listings) { %>
+        <span class="count-pill">
+          <%= listings.length %>
+            <%= listings.length===1 ? "place" : "places" %> to stay
+        </span>
+      </section>
 
-              <div class="col">
+      <main class="container flex-grow-1 py-5">
 
-                <a href="/listings/<%= listing._id %>" class="stay-link" aria-label="View <%= listing.title %>">
+        <% if (listings.length===0) { %>
 
-                  <div class="card stay-card h-100">
+          <div class="text-center py-5">
+            <h4>No <%= info.title.toLowerCase() %> stays yet</h4>
 
-                    <% if (listing.image && listing.image.url) { %>
+            <p class="text-muted">
+              Be the first to add a stay in this category.
+            </p>
 
-                      <img src="<%= listing.image.url %>" alt="<%= listing.title %>" class="card-img-top"
-                        loading="lazy" />
-
-                      <% } else { %>
-
-                        <div class="d-flex align-items-center justify-content-center bg-light text-muted"
-                          style="height: 14rem;">
-                          <span>No image available</span>
-                        </div>
-
-                        <% } %>
-
-                          <div class="card-body">
-
-                            <h6 class="card-title fw-bold mb-1">
-                              <%= listing.title %>
-                            </h6>
-
-                            <p class="text-muted small mb-2">
-                              <%= listing.location %>, <%= listing.country %>
-                            </p>
-
-                            <p class="price mb-0">
-                              &#8377;<%= Number(listing.price || 0).toLocaleString("en-IN") %>
-                                <small class="text-muted fw-normal">/ night</small>
-                            </p>
-
-                          </div>
-
-                  </div>
-
-                </a>
-
-              </div>
-
-              <% } %>
-
+            <a href="/listings/new" class="btn btn-danger mt-3">
+              Add the First Stay
+            </a>
           </div>
 
-          <% } %>
+          <% } else { %>
 
-    </main>
+            <div class="row row-cols-1 row-cols-sm-2 row-cols-lg-4 g-4">
 
-    <%- include('../includes/footer') %>
+              <% for (const listing of listings) { %>
 
-      <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js">
-      </script>
+                <div class="col">
+
+                  <a href="/listings/<%= listing._id %>" class="stay-link" aria-label="View <%= listing.title %>">
+
+                    <div class="card stay-card h-100">
+
+                      <% if (listing.image && listing.image.url) { %>
+
+                        <img src="<%= listing.image.url %>" alt="<%= listing.title %>" class="card-img-top"
+                          loading="lazy" />
+
+                        <% } else { %>
+
+                          <div class="d-flex align-items-center justify-content-center bg-light text-muted"
+                            style="height: 14rem;">
+                            <span>No image available</span>
+                          </div>
+
+                          <% } %>
+
+                            <div class="card-body">
+
+                              <h6 class="card-title fw-bold mb-1">
+                                <%= listing.title %>
+                              </h6>
+
+                              <p class="text-muted small mb-2">
+                                <%= listing.location %>, <%= listing.country %>
+                              </p>
+
+                              <p class="price mb-0">
+                                &#8377;<%= Number(listing.price || 0).toLocaleString("en-IN") %>
+                                  <small class="text-muted fw-normal">/ night</small>
+                              </p>
+
+                            </div>
+
+                    </div>
+
+                  </a>
+
+                </div>
+
+                <% } %>
+
+            </div>
+
+            <% } %>
+
+      </main>
+
+      <%- include('../includes/footer') %>
+
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js">
+        </script>
 
 </body>
 

@@ -30,6 +30,9 @@ app.get("/", (req, res) => {
   res.redirect("/listings");
 });
 
+
+app.use(express.static(path.join(__dirname, "public")));
+
 const categoryInfo = {
   beachfront: {
     title: "Beachfront",

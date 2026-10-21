@@ -4,62 +4,135 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>STAYEASE</title>
+
+  <title>All Stays | STAYEASE</title>
+
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" />
+
+  <style>
+    .stay-card {
+      border: none;
+      border-radius: 1rem;
+      overflow: hidden;
+      box-shadow: 0 4px 14px rgba(0, 0, 0, 0.1);
+      transition: transform 0.2s ease, box-shadow 0.2s ease;
+    }
+
+    .stay-card:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 10px 24px rgba(0, 0, 0, 0.18);
+    }
+
+    .stay-card img {
+      width: 100%;
+      height: 14rem;
+      object-fit: cover;
+    }
+
+    .price {
+      color: #fe424d;
+      font-weight: 700;
+    }
+
+    .stay-link {
+      color: inherit;
+      text-decoration: none;
+      display: block;
+      height: 100%;
+    }
+
+    .stay-link:focus-visible {
+      outline: 3px solid #fe424d;
+      outline-offset: 3px;
+      border-radius: 1rem;
+    }
+  </style>
 </head>
 
-<body>
+<body class="d-flex flex-column min-vh-100">
 
-  <body class="d-flex flex-column min-vh-100">
-    <%- include('../includes/navbar') %>
-      ...
-      <div class="container mt-4">
-        <h3>All Listings</h3>
+  <%- include('../includes/navbar') %>
 
-        <form method="GET" action="/listings/new" class="mb-4">
+    <main class="container flex-grow-1 py-5">
 
-        </form>
+      <h3 class="fw-bold mb-4">All Listings</h3>
 
-        <% if (allListings.length===0) { %>
-          <p>No listings yet.</p>
-          <% } else { %>
-            <div class="row row-cols-1 row-cols-md-2 row-cols-lg-4 g-4">
-              <% for (let listing of allListings) { %>
-                <div class="col">
-                  <a href="/listings/<%= listing._id %>" class="text-decoration-none text-dark">
-                    <div class="card listing-card h-100">
-                      <% if (listing.image && listing.image.url) { %>
-                        <img src="<%= listing.image.url %>" alt="<%= listing.title %>" class="card-img-top"
-                          style="height: 20rem; object-fit: cover;" />
+      <% if (allListings.length===0) { %>
+
+        <div class="text-center py-5">
+          <h4>No stays yet</h4>
+
+          <p class="text-muted">
+            Be the first to add a stay.
+          </p>
+
+          <a href="/listings/new" class="btn btn-danger mt-3">
+            Add the First Stay
+          </a>
+        </div>
+
+        <% } else { %>
+
+          <div class="row row-cols-1 row-cols-sm-2 row-cols-lg-4 g-4">
+
+            <% for (const listing of allListings) { %>
+
+              <div class="col">
+
+                <a href="/listings/<%= listing._id %>" class="stay-link" aria-label="View <%= listing.title %>">
+
+                  <div class="card stay-card h-100">
+
+                    <% if (listing.image && listing.image.url) { %>
+
+                      <img src="<%= listing.image.url %>" alt="<%= listing.title %>" class="card-img-top"
+                        loading="lazy" />
+
+                      <% } else { %>
+
+                        <div class="d-flex align-items-center justify-content-center bg-light text-muted"
+                          style="height: 14rem;">
+                          <span>No image available</span>
+                        </div>
+
                         <% } %>
+
                           <div class="card-body">
-                            <h5 class="card-title">
+
+                            <h6 class="card-title fw-bold mb-1">
                               <%= listing.title %>
-                            </h5>
+                            </h6>
 
-                            <% if (listing.location || listing.country) { %>
-                              <p class="card-text text-muted mb-1">
-                                <%= listing.location %>
-                                  <%= listing.location && listing.country ? ", " : "" %>
-                                    <%= listing.country %>
-                              </p>
-                              <% } %>
+                            <p class="text-muted small mb-2">
+                              <%= listing.location %>, <%= listing.country %>
+                            </p>
 
-                                <% if (listing.price) { %>
-                                  <p class="card-text fw-semibold mb-0">
-                                    &#8377;<%= listing.price.toLocaleString("en-IN") %> / night
-                                  </p>
-                                  <% } %>
+                            <p class="price mb-0">
+                              &#8377;<%= Number(listing.price || 0).toLocaleString("en-IN") %>
+                                <small class="text-muted fw-normal">/ night</small>
+                            </p>
+
                           </div>
-                    </div>
-                  </a>
-                </div>
-                <% } %>
-            </div>
-            <% } %>
-      </div>
-      <%- include('../includes/footer') %>
 
-  </body>
+                  </div>
+
+                </a>
+
+              </div>
+
+              <% } %>
+
+          </div>
+
+          <% } %>
+
+    </main>
+
+    <%- include('../includes/footer') %>
+
+      <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js">
+      </script>
+
+</body>
 
 </html>
